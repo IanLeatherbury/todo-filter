@@ -5,6 +5,8 @@ const InlineChunkHtmlPlugin = require('react-dev-utils/InlineChunkHtmlPlugin')
 const ZipPlugin = require('zip-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
 const { CraftExtensionApiPlugin } = require('@craftdocs/craft-extension-api-sdk')
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
 
 module.exports = (env, argv) => {
   const isProd = argv.mode === 'production'
@@ -31,7 +33,7 @@ module.exports = (env, argv) => {
         // Enables including CSS by doing "import './file.css'" in your TypeScript code
         {
           test: /\.css$/,
-          use: ['style-loader', 'css-loader']
+          use: ['style-loader', 'css-loader', "postcss-loader"]
         },
         // Allows you to use import './file.png'" in your code to get a data URI
         {
@@ -48,6 +50,10 @@ module.exports = (env, argv) => {
       ]
     },
     plugins: [
+      new MiniCssExtractPlugin({
+        filename: "style.css",
+        chunkFilename: "style.css"
+      }),
       new CraftExtensionApiPlugin(),
       new HtmlWebpackPlugin({
         inject: 'body',

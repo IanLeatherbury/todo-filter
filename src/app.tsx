@@ -2,6 +2,9 @@ import { CraftBlock, CraftTextBlock } from "@craftdocs/craft-extension-api";
 import * as React from "react"
 import * as ReactDOM from 'react-dom'
 import craftXIconSrc from "./craftx-icon.png"
+import './style.css'
+import 'tailwindcss/tailwind.css'
+
 
 const App: React.FC<{}> = () => {
   const isDarkMode = useCraftDarkMode();
@@ -25,7 +28,13 @@ const App: React.FC<{}> = () => {
     </button>
     <button className={`btn ${isDarkMode ? "dark" : ""}`} onClick={paste}>
       Paste 
-    </button>
+    </button>    
+    <button
+        type="button"
+        className="inline-flex items-center px-2.5 py-1.5 border border-transparent text-xs font-medium rounded shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      >
+        Button text
+      </button>
   </div>;
 }
 

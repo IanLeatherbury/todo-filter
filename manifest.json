@@ -1,9 +1,9 @@
 {
   "id": "do.craft.template.typescript-react",
-  "name": "Typescript/React extension template",
-  "fileName": "typescript-react-extension",
-  "author" : "Craft Docs",
-  "author-email" : "team@craft.do",
+  "name": "Ian's Super Note",
+  "fileName": "super-note-v.01",
+  "author" : "Ian Leatherbury",
+  "author-email" : "ian@",
   "description" : "Template for creating Craft Docs extensions with Typescript and React",
   "api": "0.1.0",
   "main": "index.html"

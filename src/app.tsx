@@ -20,11 +20,11 @@ const App: React.FC<{}> = () => {
     alignItems: "center",
   }}>
     <img className="icon" src={craftXIconSrc} alt="CraftX logo" />
-    <button className={`btn ${isDarkMode ? "dark" : ""}`} onClick={copyTheCurrentPage}>
-      Copy page
+    <button className={`btn ${isDarkMode ? "dark" : ""}`} onClick={copyAndFilterTheCurrentPage}>
+      Copy and filter
     </button>
     <button className={`btn ${isDarkMode ? "dark" : ""}`} onClick={paste}>
-      Paste page
+      Paste 
     </button>
   </div>;
 }
@@ -41,15 +41,7 @@ function useCraftDarkMode() {
   return isDarkMode;
 }
 
-function insertHelloWorld() {
-  const block = craft.blockFactory.textBlock({
-    content: "Hello world!!!"
-  });
-
-  craft.dataApi.addBlocks([block]);
-}
-
-async function copyTheCurrentPage() {
+async function copyAndFilterTheCurrentPage() {
   // Query the page which is currently opened
   const result = await craft.dataApi.getCurrentPage()
 
@@ -72,47 +64,6 @@ async function copyTheCurrentPage() {
   })
 
   loadedBlocks = blocksToKeep
-}
-
-async function selectDoneItems() {
-  // Query the current page
-  const result = await craft.dataApi.getCurrentPage();
-
-  // Check for errors
-  if (result.status != "success") {
-    throw new Error(result.message)
-  }
-
-  // Look for blocks which contain the word
-  const blocks = result.data.subblocks.filter(block => {
-    // Only todo blocks are relevant
-    if (block.listStyle.type !== "todo") {
-      return false
-    }
-
-    // Merge the text run
-    const content = block.content.map(x => x.text).join()
-
-    // Search for the word
-    const hasLorem = content.indexOf("lorem") > -1
-
-    return hasLorem
-  })
-
-  // Extract the block ids
-  const blockIds = blocks.map(x => x.id)
-
-  // Make those blocks selected
-  const selectResult = await craft.editorApi.selectBlocks(blockIds)
-
-  // Check for errors
-  if (selectResult.status != "success") {
-    throw new Error(selectResult.message)
-  }
-
-  // Optionally we can check which blocks were selected
-  const selectedBlocks = selectResult.data
-
 }
 
 async function paste() {

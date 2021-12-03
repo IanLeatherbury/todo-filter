@@ -22,8 +22,8 @@ const App: React.FC<{}> = () => {
     flexDirection: "column",
     alignItems: "center",
   }}>
-    <img className="h-12 icon " src={craftXIconSrc} alt="CraftX logo" />
-    <button className={`btn ${isDarkMode ? "dark" : "mt-2 items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"}`} onClick={copyAndFilterTheCurrentPage}>
+    <img className="h-12 m-4 icon " src={craftXIconSrc} alt="CraftX logo" />
+    <button className={`btn ${isDarkMode ? "dark" : "items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"}`} onClick={copyAndFilterTheCurrentPage}>
       Copy and filter
     </button>
     <button className={`btn ${isDarkMode ? "dark" : "mt-2 items-center px-2.5 py-1.5 border border-gray-300 shadow-sm text-xs font-medium rounded text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"}`} onClick={paste}>

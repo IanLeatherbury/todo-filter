@@ -1,10 +1,10 @@
 {
   "id": "do.craft.template.typescript-react",
   "name": "Todo Filter",
-  "fileName": "todo-filter-v.01",
+  "fileName": "todo-filter-v.02",
   "author" : "Ian Leatherbury",
   "author-email" : "@Leatherbeardy",
-  "description" : "Template for creating Craft Docs extensions with Typescript and React",
+  "description" : "This craft extension will copy the entire page, cut any filter out any complete items, and allow you to paste them to another note in Craft.",
   "api": "0.1.0",
   "main": "index.html"
 }

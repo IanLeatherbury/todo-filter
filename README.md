@@ -1,5 +1,5 @@
 ## About
-This craft extension will copy the entire page, cut any filter out any complete items, and allow you to paste them to another note in Craft.
+This Craft extension will copy the entire page, cut any filter out any complete items, and allow you to paste incomplete items to another note in Craft.
 
 It will keep the page structure by default but you can select "Incomplete Only" to only copy the incomplete items from your page.
 

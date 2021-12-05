@@ -1,9 +1,9 @@
 {
   "id": "do.craft.template.typescript-react",
-  "name": "Ian's Super Note",
-  "fileName": "super-note-v.01",
+  "name": "Todo Filter",
+  "fileName": "todo-filter-v.01",
   "author" : "Ian Leatherbury",
-  "author-email" : "ian@",
+  "author-email" : "@Leatherbeardy",
   "description" : "Template for creating Craft Docs extensions with Typescript and React",
   "api": "0.1.0",
   "main": "index.html"

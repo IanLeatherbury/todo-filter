@@ -1,15 +1,15 @@
-import { CraftBlock, CraftTextBlock } from "@craftdocs/craft-extension-api";
-import * as React from "react"
-import * as ReactDOM from 'react-dom'
-import './style.css'
-import 'tailwindcss/tailwind.css'
+import { CraftBlock } from "@craftdocs/craft-extension-api";
 import { CheckCircleIcon } from '@heroicons/react/solid'
+import * as ReactDOM from 'react-dom'
 import { useState } from "react";
+import * as React from "react"
+import 'tailwindcss/tailwind.css'
+import './style.css'
 
 const App: React.FC<{}> = () => {
   const isDarkMode = useCraftDarkMode();
-
   const [incompleteOnly, setIncompleteOnly] = useState(false);
+  var loadedBlocks: CraftBlock[] = []
 
   async function cutAndFilterTheCurrentPage() {
     // Query the page which is currently opened
@@ -21,9 +21,8 @@ const App: React.FC<{}> = () => {
     }
 
     const pageBlock = result.data
-    // Save the data into a global variable
 
-    var uncheckedBlocks: CraftBlock[] = []
+    var blocksToKeep: CraftBlock[] = []
     var uncheckedBlockIds: string[] = []
     var uncheckedOnly: CraftBlock[] = []
     var uncheckedOnlyIds: string[] = []
@@ -31,6 +30,7 @@ const App: React.FC<{}> = () => {
     pageBlock.subblocks.filter(async block => {
       if (incompleteOnly === true) {
         if (block.listStyle.type === "todo" && block.listStyle.state === "unchecked") {
+          // Copy the unchecked blocks but delete them from the current page
           uncheckedOnly.push(block)
           uncheckedOnlyIds.push(block.id)
         } else {
@@ -40,16 +40,19 @@ const App: React.FC<{}> = () => {
         await craft.dataApi.deleteBlocks(uncheckedOnlyIds)
       } else {
         if (block.listStyle.type === "todo" && block.listStyle.state === "unchecked") {
+          // Copy the unchecked blocks but delete them from the current page
           uncheckedBlockIds.push(block.id)
-          uncheckedBlocks.push(block)
+          blocksToKeep.push(block)
         } else if (block.listStyle.type === "todo" && block.listStyle.state === "checked") {
+          // Leave checked blocks on the current page
           return
         }
         else {
-          uncheckedBlocks.push(block)
-        }
+          // Copy the rest of the blocks
+          blocksToKeep.push(block)
+        }        
         await craft.dataApi.deleteBlocks(uncheckedBlockIds)
-        loadedBlocks = uncheckedBlocks
+        loadedBlocks = blocksToKeep
       }
     })
   }
@@ -65,9 +68,16 @@ const App: React.FC<{}> = () => {
     }
   }
 
-  async function handleincompleteChange() {
-    setIncompleteOnly(!incompleteOnly)
+  function useCraftDarkMode() {
+    const [isDarkMode, setIsDarkMode] = React.useState(false);
+
+    React.useEffect(() => {
+      craft.env.setListener(env => setIsDarkMode(env.colorScheme === "dark"));
+    }, []);
+
+    return isDarkMode;
   }
+
 
   React.useEffect(() => {
     if (isDarkMode) {
@@ -97,7 +107,7 @@ const App: React.FC<{}> = () => {
               name="incomplete"
               type="checkbox"
               checked={incompleteOnly}
-              onChange={handleincompleteChange}
+              onChange={() => { setIncompleteOnly(!incompleteOnly) }}
               className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
             />
           </div>
@@ -113,19 +123,6 @@ const App: React.FC<{}> = () => {
       </div>
     </div>);
 }
-
-var loadedBlocks: CraftBlock[] = []
-
-function useCraftDarkMode() {
-  const [isDarkMode, setIsDarkMode] = React.useState(false);
-
-  React.useEffect(() => {
-    craft.env.setListener(env => setIsDarkMode(env.colorScheme === "dark"));
-  }, []);
-
-  return isDarkMode;
-}
-
 
 export function initApp() {
   ReactDOM.render(<App />, document.getElementById('react-root'))

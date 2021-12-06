@@ -39,10 +39,13 @@ const App: React.FC<{}> = () => {
         loadedBlocks = uncheckedOnly
         await craft.dataApi.deleteBlocks(uncheckedOnlyIds)
       } else {
-        if (block.listStyle.type === "todo" && block.listStyle.state === "checked") {
-          return
-        } else {
+        if (block.listStyle.type === "todo" && block.listStyle.state === "unchecked") {
           uncheckedBlockIds.push(block.id)
+          uncheckedBlocks.push(block)
+        } else if (block.listStyle.type === "todo" && block.listStyle.state === "checked") {
+          return
+        }
+        else {
           uncheckedBlocks.push(block)
         }
         await craft.dataApi.deleteBlocks(uncheckedBlockIds)
